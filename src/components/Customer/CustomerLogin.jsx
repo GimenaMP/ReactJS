@@ -50,7 +50,7 @@ export default function CustomerLogin({ onClose }) {
                 style={{ borderRadius: 19 }}
             >
 
-            <main className="modal">
+            <div className="modal">
                 <section className="login-section">
                     <div className="login-card">
                         <h2 style={{color: 'rgb(255,255,255)'}}>Inicia Sesión</h2>
@@ -93,7 +93,7 @@ export default function CustomerLogin({ onClose }) {
                         </div>
                     </div>
                 </section>
-            </main>
+            </div>
             </ElectricBorder>
         </div>
     );

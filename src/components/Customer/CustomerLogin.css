@@ -7,6 +7,25 @@
     align-items: center;
     z-index: 9999;
 
+
+}
+
+.modal {
+    background-color: rgba(239, 158, 158, 0.1);
+    backdrop-filter: blur(12px) saturate(1.5%);
+    border-radius: 12px;
+    /*background: white;*/
+    padding: 2rem;
+    /*border-radius: 10px;*/
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease;
+
+
+
+
+}
+
+.login-section {
     .login-card {
         max-width: 400px;
         width: 100%;
@@ -55,42 +74,29 @@
 
 
 
+        }
+    }
+
+
+    .form-actions
+    {
+        margin-top: 3rem;
+        text-align: center;
+        button
+        {
+            background-color: rgba(239, 158, 158, 0.01);
+            backdrop-filter: blur(12px) saturate(0.5%);
+
+
+            &:hover {
+                box-shadow: 0 2px 8px rgba(239, 158, 158, 0.90);
             }
         }
-
-
-        .form-actions
-        {
-            margin-top: 3rem;
-            text-align: center;
-            button
-            {
-                background-color: rgba(239, 158, 158, 0.01);
-                backdrop-filter: blur(12px) saturate(0.5%);
-
-
-                &:hover {
-                    box-shadow: 0 2px 8px rgba(239, 158, 158, 0.90);
-                }
-            }
 
 
 
 
     }
-}
-
-.modal {
-    background-color: rgba(239, 158, 158, 0.1);
-    backdrop-filter: blur(12px) saturate(1.5%);
-    border-radius: 12px;
-    /*background: white;*/
-    padding: 2rem;
-    /*border-radius: 10px;*/
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease;
-
-
 
 }
 

@@ -1,6 +1,4 @@
 
-
-
 .electric-border {
     --electric-light-color: oklch(from var(--electric-border-color) l c h);
     --eb-border-width: 2px;
