@@ -1,19 +1,24 @@
 
-import { Link } from 'react-router-dom';
+import { Link   } from 'react-router-dom';
 import ScrollFloat from "../components/Scroll/ScrollFloat";
 import SplitText  from "../components/Split/SplitText";
+import { useState } from "react";
+import CustomerLogin from "../components/Customer/CustomerLogin";
+
 
 
 export default function Home() {
 
 
   const handleAnimationComplete = () => {
-    console.log('All letters have animated!');
+    console.log('Animadoooooo!');
   };
+
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
     <main>
-      {/* Hero Section */}
+
       <section className="hero">
 
 
@@ -38,14 +43,24 @@ export default function Home() {
           elegante y tradicional.
         </p>
         <div className="buttons">
-          <Link to="/reservas" className="btn btn-primary">
-            Hacer&nbsp;Reserva
-          </Link>
+
+            <button
+                className="btn btn-primary"
+                onClick={() => {
+                    console.log('Botón clickeado');
+                    setIsLoginOpen(true);
+                }}
+            >
+                Hacer&nbsp;Reserva
+            </button>
+
           <Link to="/menu" className="btn btn-outline">
             Ver&nbsp;Gastronomía
           </Link>
         </div>
       </section>
+
+        {isLoginOpen && <CustomerLogin onClose={() => setIsLoginOpen(false)} />}
 
       {/* Features Section */}
       <section className="features">
@@ -108,7 +123,7 @@ export default function Home() {
                 Nuestra Historia
 
               </ScrollFloat>
-              {/* Row 1 */}
+
               <div className="feature-card-2">
                 <h3>Quienes Somos</h3>
                 <p>
@@ -119,7 +134,7 @@ export default function Home() {
               <div className="feature-card-imagen history-images">
                 <img
                   src="/images/camarones _fritos.jpg"
-                  alt="Interior del restaurante"
+                  alt="Camarones fritos al estilo chino"
                 />
               </div>
               <div className="feature-card-2">
@@ -129,11 +144,11 @@ export default function Home() {
                   excepcional con sabores auténticos e ingredientes frescos.
                 </p>
               </div>
-              {/* Row 2 */}
+
               <div className="feature-card-imagen history-images">
                 <img
                   src="/images/spareribs.png"
-                  alt="Decoración con faroles chinos"
+                  alt="spareribs al estilo chino"
                 />
               </div>
               <div className="feature-card-2">

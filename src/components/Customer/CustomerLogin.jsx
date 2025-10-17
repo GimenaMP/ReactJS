@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import "../Customer/CustomerLogin.css";
+import ElectricBorder from "../Customer/ElectricBorder.jsx";
 
 export default function CustomerLogin({ onClose }) {
 
@@ -41,11 +42,19 @@ export default function CustomerLogin({ onClose }) {
 
     return (
         <div className="overlay">
+            <ElectricBorder
+                color={"rgba(255,0,51)"}
+                speed={0.2}
+                chaos={0.2}
+                thickness={2}
+                style={{ borderRadius: 19 }}
+            >
+
             <main className="modal">
                 <section className="login-section">
                     <div className="login-card">
-                        <h2>Inicia Sesión</h2>
-                        <p style={{ textAlign: 'center', marginBottom: '1rem' }}>
+                        <h2 style={{color: 'rgb(255,255,255)'}}>Inicia Sesión</h2>
+                        <p style={{ textAlign: 'center', marginBottom: '1rem',  color: 'rgb(255, 255, 255)' }}>
                             Accede para realizar tus reservas.
                         </p>
                         <form onSubmit={handleLogin}>
@@ -78,13 +87,14 @@ export default function CustomerLogin({ onClose }) {
                             </div>
                         </form>
                         <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-                            <Link to="/" style={{ color: 'var(--primary)' }}>
-                                ← Volver al Inicio
-                            </Link>
+                            {/*<Link to="/" style={{ color: 'var(--primary)' }}>*/}
+                            {/*    ← Volver al Inicio*/}
+                            {/*</Link>*/}
                         </div>
                     </div>
                 </section>
             </main>
+            </ElectricBorder>
         </div>
     );
 }
