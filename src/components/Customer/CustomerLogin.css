@@ -1,109 +1,294 @@
+
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-section .login-card {
+    width: var(--card-w);
+    min-height: var(--card-h);
+    padding: 2rem 2.2rem;
+    border-radius: 16px;
+    background: rgba(12, 0, 0, 0.55);
+    box-shadow: 0 0 0 2px rgba(255, 0, 51, 0.25), 0 10px 30px rgba(0, 0, 0, 0.4);
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* Centrado perfecto dentro del modal */
+    margin: 0 auto;
+}
+/* Overlay oscuro */
 .overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.49);
+    background: rgba(0,0,0,0.49);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-
-
 }
 
+/* Contenedor del modal cristalino */
 .modal {
-    background-color: rgba(239, 158, 158, 0.1);
-    backdrop-filter: blur(12px) saturate(1.5%);
+    background: rgba(239,158,158,0.10);
+    backdrop-filter: blur(12px) saturate(1.5);
     border-radius: 12px;
-    /*background: white;*/
     padding: 2rem;
-    /*border-radius: 10px;*/
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease;
-
-
-
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    animation: fadeIn .3s ease;
 }
 
-.login-section {
-    .login-card {
-        max-width: 400px;
-        width: 100%;
-        padding: 2rem;
-        box-shadow: 0 2px 8px rgba(239, 158, 158, 0.90);
-
-        background-color: rgb(202, 18, 18, 0.01);
-        backdrop-filter: blur(14px) saturate(0.001%);
-        border-radius: 12px;
-
-        .form-group
-        {
-            margin-bottom: 1rem;
-
-
-            label
-            {
-                display: block;
-                margin-bottom: 0.5rem;
-
-                color: rgb(255, 255, 255);
-                *text-shadow: -1px -1px 0 rgb(152, 130, 130), 1px -1px 0 rgba(239, 158, 158, 0.3), -1px 1px 0 rgba(51, 43, 43, 0.25), 1px 1px 0 rgba(147, 43, 43, 0.25);
-
-
-
-
-            }
-
-            input
-            {
-                background-color: rgba(255, 255, 255, 0.2);
-                backdrop-filter: blur(12px) saturate(0.5%);
-                color: #470101;
-                border: 1px solid rgba(147, 43, 43, 0.25);
-                &:placeholder-shown {
-                    border: 1px solid rgb(227, 210, 210);
-                }
-                &::placeholder {
-                    color: #000;
-
-
-                }
-            }
-
-
-
-
-
-        }
-    }
-
-
-    .form-actions
-    {
-        margin-top: 3rem;
-        text-align: center;
-        button
-        {
-            background-color: rgba(239, 158, 158, 0.01);
-            backdrop-filter: blur(12px) saturate(0.5%);
-
-
-            &:hover {
-                box-shadow: 0 2px 8px rgba(239, 158, 158, 0.90);
-            }
-        }
-
-
-
-
-    }
-
+/* --- Tamaño uniforme para las 3 vistas --- */
+:root{
+    --card-w: 420px;
+    --card-h: 560px; /* sube/baja a tu gusto */
 }
 
+
+
+/* Titulares y descripciones */
+.card-header {
+    text-align: center;
+    margin: 0;
+    color: #fff;
+    display: grid;
+    justify-items: center;
+    gap: .35rem;
+}
+
+/* Tamaño y centrado del logo SVG del login */
+.card-icon svg {
+    width: 60px;  /* tamaño mediano */
+    height: 60px;
+    display: block;
+    margin: 0 auto 0.5rem auto;
+}
+
+
+.card-title { margin: 0; }
+.card-description {
+    text-align: center;
+    margin: 0 0 0.25rem 0;
+    color: rgba(255,255,255,0.8);
+}
+
+/* El form crece en el área central */
+.login-card form{
+    display: grid;
+    align-content: start;
+}
+
+/* Íconos y campos */
+.icon{ width: 22px; height: 22px; display: inline-block; }
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255,0,51,0.35);
+    border-radius: 12px;
+    padding: .35rem .5rem .35rem .8rem;
+    background: rgba(255,255,255,0.10);
+    margin-bottom: 1rem;
+    min-height: 48px;
+}
+
+.input-container input {
+    border: none;
+    background: transparent;
+    color: #fff;
+    width: 100%;
+    padding: .6rem .6rem;
+    outline: none;
+}
+
+.input-icon { margin-right: .35rem; opacity: .9; }
+.input-icon-right { position: absolute; right: .65rem; cursor: pointer; }
+
+/* Placeholders */
+.login-section .login-card input::placeholder,
+.login-section .login-card textarea::placeholder {
+    color: rgba(255,255,255,0.65);
+}
+
+/* Focus */
+.login-section .login-card input:focus,
+.login-section .login-card textarea:focus,
+.login-section .login-card select:focus {
+    border-color: #ff0033;
+    box-shadow: 0 0 0 3px rgba(255,0,51,0.25);
+}
+
+/* Botón principal rojo */
+.primary-button,
+.login-section .login-card .btn.btn-primary {
+    width: 100%;
+    padding: .85rem 1rem;
+    border: none;
+    border-radius: 14px;
+    background: #ff0033;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .04s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.primary-button:hover,
+.login-section .login-card .btn.btn-primary:hover {
+    box-shadow: 0 0 10px rgba(255,0,51,0.6);
+}
+
+.primary-button:active,
+.login-section .login-card .btn.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.form-actions { margin-top: 1rem; text-align: center; }
+
+/* Links para cambiar de vista */
+.switch-links {
+    margin-top: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+}
+
+.switch-links.single-link {
+    flex-direction: row;
+    justify-content: center;
+    gap: .25rem;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff0033;
+    font-weight: 600;
+    text-decoration: underline;
+    padding: 0;
+}
+
+/* Términos */
+.terms-container {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin: .5rem 0 0;
+    color: rgba(255,255,255,0.85);
+}
+.terms-container input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: #ff0033;
+}
+.highlight-text { color: #ff0033; font-weight: 700; }
+
+/* Back button */
+.back-button {
+    background: transparent;
+    border: none;
+    color: #ff0033;
+    font-size: 1.25rem;
+    cursor: pointer;
+    margin-right: .5rem;
+}
+
+/* Spacer para llenar el alto fijo cuando falte contenido */
+.spacer-grow { height: 100%; }
+
+/* Animación */
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
+    from { opacity: 0; transform: scale(.98); }
     to { opacity: 1; transform: scale(1); }
 }
+
+
+.input-container {
+    position: relative;                 /* ancla para los absolutos */
+    overflow: visible;                  /* que nada corte los svg */
+}
+
+.input-container .input-icon,
+.input-container .input-icon-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+/* Icono izquierdo (usuario/correo/teléfono/candado) */
+.input-container .input-icon {
+    left: 12px;
+    pointer-events: none;               /* no bloquea el click dentro del input */
+}
+
+/* Icono derecho (ojo mostrar/ocultar) */
+.input-container .input-icon-right {
+    right: 12px;
+    cursor: pointer;
+    pointer-events: auto;               /* sí debe recibir clicks */
+}
+
+/* Tamaño consistente de todos los SVG dentro de los spans de icono */
+.input-icon svg,
+.input-icon-right svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+/* Deja espacio dentro del input para que no tape al icono */
+.input-container input {
+    padding-left: 48px !important;      /* espacio para el icono izquierdo */
+    padding-right: 44px !important;     /* espacio para el ojo derecho */
+}
+
+/* Colorea fácilmente los SVG si usan stroke/fill currentColor */
+.input-icon,
+.input-icon-right {
+    color: #ff0033;                     /* ajusta si quieres otro tono */
+}
+
+/* Por si algún estilo ocultó el email en el registro */
+#reg-email {
+    display: block !important;
+    visibility: visible !important;
+}
+
+.modal { position: relative; }
+
+.close-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.06);
+    color: #ff0033;           /* el CloseIcon usa currentColor */
+    border: 1px solid rgba(255,0,51,0.35);
+    border-radius: 999px;
+    padding: 6px;
+    line-height: 0;
+    cursor: pointer;
+    z-index: 10000;
+    transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+}
+.close-button:hover {
+    background: rgba(255,0,51,0.18);
+    transform: scale(1.08);
+    box-shadow: 0 0 10px rgba(255,0,51,0.35);
+}
+.close-button:active { transform: scale(1.02); }
+.close-button svg { display: block; }
 
 
 

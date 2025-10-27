@@ -1,13 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-/**
- * The Header component renders the navigation bar used across all pages.  It
- * mirrors the structure of the original static site by including the
- * restaurant logo (an inline SVG) and a series of navigation links.  The
- * NavLink component from react‑router‑dom applies an `active` class to the
- * currently selected route, which is styled in styles.css to highlight the
- * active page.
- */
+
 export default function Header() {
   return (
     <header>
@@ -43,9 +36,7 @@ export default function Header() {
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : undefined)}>
             Inicio
           </NavLink>
-          <NavLink to="/reservas" className={({ isActive }) => (isActive ? 'active' : undefined)}>
-            Reservas
-          </NavLink>
+
           <NavLink to="/menu" className={({ isActive }) => (isActive ? 'active' : undefined)}>
             Gastronomía
           </NavLink>

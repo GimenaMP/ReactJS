@@ -27,18 +27,13 @@ body {
     background-color: var(--secondary);
     color: var(--dark);
     line-height: 1.6;
-    /*background: linear-gradient(135deg, rgba(102,102,102,0.8), rgba(42,42,42)), url('images/lo_mein.jpg') center/cover no-repeat;filter: grayscale(10%);*/
-    /*
-     * Point image references at the public folder.  In a Vite project, assets
-     * placed in the `public` directory are served from the root.  Prefixing
-     * with `/images/…` ensures that the background loads correctly at run time.
-     */
+
     background: linear-gradient(
         to top,
         rgb(255, 255, 255),
         rgba(228, 225, 225, 0.42)
       ),
-      url('/images/lo_mein.jpg') center/cover no-repeat;
+      url('./video/video_uno.mp4') center/cover no-repeat;
     filter: grayscale(10%);
     border-radius: var(--radius);
 
@@ -604,4 +599,57 @@ footer {
     .feature-grid-2 > div {
         text-align: left;
     }
+}
+
+
+/*  Video de fondo global */
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(90%) saturate(120%) grayscale(20%);
+    z-index: -1;
+    opacity: 0;
+    animation: fadeInVideo 2s ease-in-out forwards;
+    transition: filter 1s ease;
+}
+
+/* Efecto de aparición */
+@keyframes fadeInVideo {
+    to {
+        opacity: 40%;
+    }
+}
+
+/*  Capa translúcida roja con desenfoque dinámico */
+/*body::before {*/
+/*    content: "";*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background: linear-gradient(*/
+/*            120deg,*/
+/*            rgba(196, 33, 38, 0.55),*/
+/*            rgba(196, 33, 38, 0.35)*/
+/*    );*/
+/*    backdrop-filter: blur(4px);*/
+/*    z-index: -1;*/
+/*    pointer-events: none;*/
+/*    transition: backdrop-filter 0.5s ease;*/
+/*}*/
+
+/* Aumenta el blur al hacer scroll */
+body.scrolled::before {
+    backdrop-filter: blur(8px);
+}
+
+
+main, header, footer, section, div, h1, h2, h3, p, button, a {
+    position: relative;
+    z-index: 1;
 }

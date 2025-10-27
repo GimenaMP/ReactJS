@@ -6,27 +6,28 @@ import Menu from './pages/Menu.jsx';
 import Contact from './pages/Contact.jsx';
 import EmployeeLogin from './pages/EmployeeLogin.jsx';
 import Reservations from './pages/Reservations.jsx';
+import BackgroundVideo from './components/BackgroundVideo.jsx';
+import './styles.css';
 
-/**
- * App is the root component of the application.  It sets up routing
- * using react‑router and renders the common header and footer on every
- * page.  Each Route corresponds to a page component defined in the
- * src/pages directory.
- */
 export default function App() {
-  return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/contacto" element={<Contact />} />
-        <Route path="/empleados" element={<EmployeeLogin />} />
-        <Route path="/reservas" element={<Reservations />} />
-        {/* Fallback: redirect unknown paths back to home */}
-        <Route path="*" element={<Home />} />
-      </Routes>
-      <Footer />
-    </Router>
-  );
+    return (
+        <Router>
+            <div className="app-container">
+
+                <BackgroundVideo />
+
+
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/menu" element={<Menu />} />
+                    <Route path="/contacto" element={<Contact />} />
+                    <Route path="/empleados" element={<EmployeeLogin />} />
+                    <Route path="/reservas" element={<Reservations />} />
+                    <Route path="*" element={<Home />} />
+                </Routes>
+                <Footer />
+            </div>
+        </Router>
+    );
 }

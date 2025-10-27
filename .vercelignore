@@ -1,0 +1,16 @@
+# Dependencias y configuraciones locales
+node_modules
+.vercel
+.git
+.gitignore
+npm-debug.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos temporales
+.DS_Store
+*.log
+*.zip
