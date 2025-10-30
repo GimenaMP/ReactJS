@@ -28,12 +28,7 @@ body {
     color: var(--dark);
     line-height: 1.6;
 
-    background: linear-gradient(
-        to top,
-        rgb(255, 255, 255),
-        rgba(228, 225, 225, 0.42)
-      ),
-      url('./video/video_uno.mp4') center/cover no-repeat;
+
     filter: grayscale(10%);
     border-radius: var(--radius);
 
@@ -99,7 +94,7 @@ header {
         rgba(196, 33, 38, 0.8),
         rgba(196, 33, 38, 0.6)
       ),
-      url('/images/lo_mein.jpg') center/cover no-repeat;
+      url('../public/images/lo_mein.jpg') center/cover no-repeat;
     color: var(--light);
     text-align: center;
     position: relative;
@@ -617,12 +612,28 @@ footer {
     transition: filter 1s ease;
 }
 
-/* Efecto de aparición */
+/* Capa gris semitransparente sobre el video */
+.background-video::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(128, 128, 128, 0.25); /* gris con opacidad */
+    pointer-events: none; /* permite clics al contenido encima */
+    z-index: 1;
+}
+
 @keyframes fadeInVideo {
+    from {
+        opacity: 0;
+        transform: scale(1.05); /* un ligero zoom inicial */
+    }
     to {
-        opacity: 40%;
+        opacity: 1;
+        transform: scale(1);
     }
 }
+
+
 
 /*  Capa translúcida roja con desenfoque dinámico */
 /*body::before {*/
@@ -652,4 +663,155 @@ body.scrolled::before {
 main, header, footer, section, div, h1, h2, h3, p, button, a {
     position: relative;
     z-index: 1;
+}
+
+/* Tablas bonitas + responsive */
+.table-responsive { width: 100%; overflow-x: auto; }
+.pretty-table { width: 100%; border-collapse: collapse; }
+.pretty-table th, .pretty-table td {
+    padding: .6rem .7rem;
+    border-bottom: 1px solid #e7e7e7;
+    text-align: left;
+    vertical-align: middle;
+}
+.pretty-table thead th {
+    font-weight: 700;
+    border-bottom: 2px solid #dcdcdc;
+}
+
+/* Cards en móvil */
+@media (max-width: 720px) {
+    .pretty-table thead { display: none; }
+    .pretty-table, .pretty-table tbody, .pretty-table tr, .pretty-table td { display: block; width: 100%; }
+    .pretty-table tr { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; margin-bottom: .65rem; }
+    .pretty-table td { border: none; border-bottom: 1px dashed #ddd; position: relative; padding-left: 45%; }
+    .pretty-table td:last-child { border-bottom: none; }
+    .pretty-table td::before {
+        content: attr(data-label);
+        position: absolute; left: .7rem; top: .6rem; width: 38%;
+        color: #888; font-weight: 600; font-size: .85rem;
+    }
+}
+
+
+/* === Header básico === */
+.header {
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #a80000;
+    text-decoration: none;
+}
+
+/* === Menú principal === */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #c42126;
+}
+
+.logout-btn {
+    background: #c42126;
+    border: none;
+    color: white;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #a80000;
+}
+
+/* === Botón hamburguesa === */
+.burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.burger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: #333;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.burger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.burger.active span:nth-child(2) {
+    opacity: 0;
+}
+.burger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* === Responsive === */
+@media (max-width: 900px) {
+    .burger {
+        display: flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        gap: 1rem;
+        border-top: 1px solid #eee;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        transform: translateY(-20px);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
 }

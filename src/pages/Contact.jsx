@@ -1,11 +1,5 @@
 import { Link } from 'react-router-dom';
 
-/**
- * Contact page component.  Presents the restaurant's contact information
- * including address, phone numbers, email addresses, business hours and
- * special notes.  A call to action encourages visitors to make a
- * reservation directly from the contact page.
- */
 export default function Contact() {
   return (
     <main>
