@@ -19,7 +19,7 @@ export default function AuthCallback() {
                     return;
                 }
 
-                // Primero: intentar pending_profile mismo dispositivo
+
                 const pending = localStorage.getItem("pending_profile");
                 if (pending) {
                     const { email, full_name, phone } = JSON.parse(pending);
@@ -61,7 +61,7 @@ export default function AuthCallback() {
                     return;
                 }
 
-                // Si no hay datos para crear perfil, solo redirigir o pedir completar perfil
+
                 if (!cancelled) {
                     setMsg("Confirmación exitosa. Completa tu perfil si hace falta. Redirigiendo…");
                     setTimeout(() => navigate("/reservas"), 600);

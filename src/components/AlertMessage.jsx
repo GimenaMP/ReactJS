@@ -3,7 +3,7 @@ import React from "react";
 export default function AlertMessage({ text = "", type = "info" }) {
     if (!text) return null;
 
-    // Detectar tipo automático según el contenido del mensaje
+
     const msg = text.toLowerCase();
     let bg, border, color, title;
 

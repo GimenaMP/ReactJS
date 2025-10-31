@@ -1,16 +1,23 @@
-# Dependencias y configuraciones locales
-node_modules
-.vercel
-.git
+# Ignorar configuraciones de desarrollo
+node_modules/
+.vscode/
+.idea/
+.git/
 .gitignore
-npm-debug.log
+package-lock.json
+*.log
+
+# Archivos locales o confidenciales
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
-# Archivos temporales
-.DS_Store
-*.log
-*.zip
+# Supabase y configuraciones locales
+supabase/
+database/
+*.bak
+*.tmp
+
+# Archivos que no necesita el build
+README.md
+LICENSE

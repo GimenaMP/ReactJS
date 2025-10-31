@@ -102,7 +102,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* History Section */}
+
 
 
       <section className="history">
@@ -167,7 +167,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action */}
+
       <section className="cta">
         <h2>¿Listo para una experiencia única?</h2>
         <p>

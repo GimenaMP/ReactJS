@@ -6,7 +6,7 @@ export async function signUpAndCreateProfile({ email, password, full_name, phone
 
     const redirectTo = `${window.location.origin}/auth/callback`;
 
-    // IMPORTANTE: enviamos metadata (full_name, phone) y la ruta de retorno
+
     const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -17,7 +17,7 @@ export async function signUpAndCreateProfile({ email, password, full_name, phone
     });
     if (error) throw error;
 
-    // respaldo por si el usuario confirma en otro momento/dispositivo
+
     localStorage.setItem('pending_profile', JSON.stringify({ email, full_name, phone }));
 
     return data;
@@ -40,7 +40,7 @@ export async function signInAndFetchProfile({ email, password }) {
         .maybeSingle();
     if (profileError) throw profileError;
 
-    // si nunca se pudo crear el perfil (confirmación tardía), lo completamos ahora con lo que guardamos
+
     if (!profile) {
         const pending = localStorage.getItem('pending_profile');
         if (pending) {
@@ -56,7 +56,7 @@ export async function signInAndFetchProfile({ email, password }) {
                 return { auth: data, profile: { user_id: userId, email: pEmail, full_name, phone } };
             }
         }
-        // si no hay pending_profile, forzamos mensaje claro
+
         await supabase.auth.signOut();
         throw new Error('Perfil no encontrado. Completa el registro o contacta soporte.');
     }
@@ -83,6 +83,7 @@ export async function signOut() {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
 }
+
 
 // import supabase from './supabaseClient.js';
 //

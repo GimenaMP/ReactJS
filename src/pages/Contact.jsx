@@ -71,7 +71,8 @@ export default function Contact() {
           </div>
         </div>
       </section>
-      {/* Call to Action */}
+
+
       <section className="cta">
         <h2>¿Listo para visitarnos?</h2>
         <p>

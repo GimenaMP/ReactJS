@@ -4,8 +4,8 @@ import supabase from "../lib/supabaseClient.js";
 
 export default function LogoutButton({
                                          label = "Cerrar sesión",
-                                         redirectTo = "/",      // a dónde llevar al usuario tras cerrar sesión
-                                         compact = false,       // botón compacto (true) o normal (false)
+                                         redirectTo = "/",
+                                         compact = false,
                                      }) {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function LogoutButton({
 
     return (
         <>
-            {/* Botón que abre el modal */}
+
             <button
                 type="button"
                 onClick={() => setOpen(true)}
@@ -212,7 +212,7 @@ export default function LogoutButton({
                         </div>
                     </div>
 
-                    {/* Animaciones */}
+
                     <style>
                         {`
               @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }

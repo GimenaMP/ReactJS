@@ -82,19 +82,19 @@ function CloseIcon(props) {
     );
 }
 
-/* ===== Componente ===== */
+
 export default function CustomerLogin({ onClose }) {
     const [view, setView] = useState("login");
     const navigate = useNavigate();
 
-    // Login
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showLoginPassword, setShowLoginPassword] = useState(false);
     const [loginUserMsg, setLoginUserMsg] = useState("");
     const [loginPassMsg, setLoginPassMsg] = useState("");
 
-    // Registro
+
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -104,12 +104,12 @@ export default function CustomerLogin({ onClose }) {
     const [registerError, setRegisterError] = useState("");
     const [registerSuccess, setRegisterSuccess] = useState("");
 
-    // Recuperación
+
     const [recoverValue, setRecoverValue] = useState("");
     const [recoverError, setRecoverError] = useState("");
     const [recoverSuccess, setRecoverSuccess] = useState("");
 
-    /* === LOGIN === */
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoginUserMsg("");
@@ -134,7 +134,7 @@ export default function CustomerLogin({ onClose }) {
                 return;
             }
 
-            //  Confeti al iniciar sesión
+
             confetti({
                 particleCount: 120,
                 spread: 70,
@@ -152,7 +152,7 @@ export default function CustomerLogin({ onClose }) {
 
 };
 
-    /* === REGISTRO === */
+
     const handleRegister = async (e) => {
         e.preventDefault();
         setRegisterError("");
@@ -171,7 +171,7 @@ export default function CustomerLogin({ onClose }) {
                 phone,
             });
 
-            // 🎉 Confeti también al CREAR el usuario
+
             confetti({
                 particleCount: 140,
                 spread: 70,

@@ -76,9 +76,10 @@ export default function Reservations() {
     })();
   }, []);
 
-  // Cargar slots (usa RPC que cuenta RESERVAS)
-  const loadSlots = async (dateStr) => {
-    setLoadingSlots(true);
+  // Cargar slots usa RPC que cuenta RESERVAS
+
+  const loadSlots = async (dateStr, isInitial = false) => {
+    if (isInitial) setLoadingSlots(true);
     const { data, error } = await supabase.rpc('get_availability', { p_date: dateStr });
     if (error) {
       console.error('get_availability error:', error.message);
@@ -90,18 +91,49 @@ export default function Reservations() {
       }));
       setSlots(norm);
     }
-    setLoadingSlots(false);
+    if (isInitial) setLoadingSlots(false);
   };
+  // const loadSlots = async (dateStr) => {
+  //   setLoadingSlots(true);
+  //   const { data, error } = await supabase.rpc('get_availability', { p_date: dateStr });
+  //   if (error) {
+  //     console.error('get_availability error:', error.message);
+  //     setSlots([]);
+  //   } else {
+  //     const norm = (data || []).map(row => ({
+  //       slot: String(row.slot).slice(0, 5),
+  //       remaining: row.remaining
+  //     }));
+  //     setSlots(norm);
+  //   }
+  //   setLoadingSlots(false);
+  // };
 
   // Carga inicial por fecha
-  useEffect(() => { loadSlots(selectedDate); }, [selectedDate]);
 
-  // Polling 7s
+
+  // Carga inicial por fecha (línea ~125)
+  useEffect(() => {
+    loadSlots(selectedDate, true);  // ← true = mostrar skeleton
+  }, [selectedDate]);
+
+
   useEffect(() => {
     let alive = true;
-    const id = setInterval(() => { if (alive) loadSlots(selectedDate); }, 7000);
+    const id = setInterval(() => {
+      if (alive) loadSlots(selectedDate, false);  // actualizar sin skeleton
+    }, 7000);
     return () => { alive = false; clearInterval(id); };
   }, [selectedDate]);
+
+  // useEffect(() => { loadSlots(selectedDate); }, [selectedDate]);
+  //
+  // // Polling 7s
+  // useEffect(() => {
+  //   let alive = true;
+  //   const id = setInterval(() => { if (alive) loadSlots(selectedDate); }, 7000);
+  //   return () => { alive = false; clearInterval(id); };
+  // }, [selectedDate]);
 
   const firstName = useMemo(() => (profile?.full_name?.trim()?.split(/\s+/)[0]) || '', [profile]);
 
@@ -332,15 +364,31 @@ export default function Reservations() {
 
               <div className="gc-group">
                 <label htmlFor="people">Número de Personas</label>
-                <select
-                    id="people" name="people"
-                    value={people} onChange={(e) => setPeople(Number(e.target.value))}
-                    className="gc-input"
-                >
-                  {[1,2,3,4,5,6,7,8].map(n => (
-                      <option key={n} value={n}>{n} {n===1 ? 'persona' : 'personas'}</option>
-                  ))}
-                </select>
+                <div className="gc-people-selector">
+                  <button
+                      type="button"
+                      className="gc-arrow"
+                      onClick={() => setPeople(prev => Math.max(1, prev - 1))}
+                      disabled={people <= 1}
+                      aria-label="Disminuir personas"
+                  >
+                    ‹
+                  </button>
+
+                  <span className="gc-people-display">
+                    {people} {people === 1 ? 'persona' : 'personas'}
+                  </span>
+
+                  <button
+                      type="button"
+                      className="gc-arrow"
+                      onClick={() => setPeople(prev => Math.min(8, prev + 1))}
+                      disabled={people >= 8}
+                      aria-label="Aumentar personas"
+                  >
+                    ›
+                  </button>
+                </div>
               </div>
 
               <div className="gc-group">
@@ -410,10 +458,12 @@ export default function Reservations() {
                 </div>
 
                 <div className="gc-actions center">
-                  <button className="gc-btn gc-primary" onClick={handleCancel} disabled={canceling}>
-                    {canceling ? 'Cancelando…' : 'Confirmar Cancelación'}
-                  </button>
-                  <button className="gc-btn gc-outline" onClick={() => setShowCancelModal(false)}>Cerrar</button>
+                 <div style={{ display: 'flex', justifyContent: 'center'}}>
+                   <button className="gc-btn gc-primary" onClick={handleCancel} disabled={canceling}>
+                     {canceling ? 'Cancelando…' : 'Confirmar Cancelación'}
+                   </button>
+                 </div>
+                  {/*<button className="gc-btn gc-outline" onClick={() => setShowCancelModal(false)}>Cerrar</button>*/}
                 </div>
               </div>
             </div>
@@ -452,20 +502,38 @@ export default function Reservations() {
         .gc-bar-item strong{color:#fff}
 
         .gc-card{
-          max-width: 1100px; margin: 1.5rem auto;
-          background: linear-gradient(180deg, var(--card), var(--card-2));
+          max-width: 1100px; 
+          margin: 1.5rem auto;
+          background: linear-gradient(180deg, rgba(25, 25, 30, 0.7), rgba(15, 15, 20, 0.6));
           border: 1px solid rgba(255,255,255,.12);
           box-shadow: 0 20px 40px rgba(0,0,0,.35);
           backdrop-filter: blur(16px);
-          border-radius: 18px; padding: 1.25rem 1.25rem 1.75rem;
+          border-radius: 18px; 
+          padding: 1.25rem 1.25rem 1.75rem;
           animation: cardIn .35s ease both;
-          background: rgba(20, 20, 25, 0.6);
         }
+        
+       
         @keyframes cardIn { from {opacity:0; transform: translateY(8px);} to{opacity:1; transform:none;} }
 
-        .gc-header{ text-align:center; margin: .5rem 0 1rem;  background: rgba(20, 20, 25, 0.6);}
-        .gc-title{ font-size: clamp(1.3rem, 1.5vw + 1rem, 2rem); margin:0;}
-        .gc-subtitle{ color: var(--muted); margin:.25rem 0 0}
+          .gc-header{ 
+          text-align: center; 
+          margin: 0 0 1.5rem;
+          padding: 1.5rem 1rem;
+           background: linear-gradient(180deg, rgba(25, 25, 30, 0.7), rgba(15, 15, 20, 0.6));
+        }
+        
+        .gc-title{ 
+          font-size: clamp(1.3rem, 1.5vw + 1rem, 2rem); 
+          margin: 0;
+          font-weight: 700;
+          color: #fff;
+        }
+        
+        .gc-subtitle{ 
+          color: var(--muted); 
+          margin: .5rem 0 0;
+}
         .gc-alert{ color: #ffb4b4; text-align:center; margin: .4rem 0 .8rem}
 
         .gc-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -475,10 +543,67 @@ export default function Reservations() {
         .gc-input{
           width:100%; padding:.8rem .9rem; border-radius: 12px;
           border:1px solid rgba(255,255,255,.12);
-          background: rgba(255,255,255,.06); color:#fff;
+          background: transparent;
+          color:#fff;
           outline:none; transition: box-shadow .2s, transform .1s;
         }
-        .gc-input:focus{ box-shadow: var(--ring); transform: translateY(-1px); }
+        .gc-input:hover {
+          box-shadow: var(--ring);
+          transform: translateY(-1px);
+        }
+
+        .gc-people-selector {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          border: 1px solid rgba(255,255,255,.12);
+          border-radius: 12px;
+          background: rgba(255,255,255,.06);
+          overflow: hidden;
+          transition: box-shadow .2s, transform .1s;
+        }
+
+        .gc-people-selector:hover {
+          box-shadow: var(--ring);
+          transform: translateY(-1px);
+        }
+
+        .gc-arrow {
+          flex: 0 0 50px;
+          height: 48px;
+          background: transparent;
+          border: none;
+          color: #fff;
+          font-size: 2rem;
+          cursor: pointer;
+          transition: background .2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .gc-arrow:hover:not(:disabled) {
+          background: rgba(234,42,51,.15);
+        }
+
+        .gc-arrow:active:not(:disabled) {
+          background: rgba(234,42,51,.25);
+        }
+
+        .gc-arrow:disabled {
+          color: #555;
+          cursor: not-allowed;
+        }
+
+        .gc-people-display {
+          flex: 1;
+          text-align: center;
+          padding: 0.8rem;
+          font-weight: 600;
+          color: #fff;
+          border-left: 1px solid rgba(255,255,255,.12);
+          border-right: 1px solid rgba(255,255,255,.12);
+        }
 
         .gc-slots{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:.6rem; }
         @media (max-width: 520px){ .gc-slots{ grid-template-columns: repeat(2,1fr);} }
@@ -519,21 +644,108 @@ export default function Reservations() {
         @media (prefers-reduced-motion: reduce){
           .gc-slot, .gc-input{ transition:none; }
           .gc-ripple{ display:none; }
-        }
+        }.gc-actions{ 
+  display: flex; 
+  gap: .8rem; 
+  flex-wrap: wrap; 
+  margin-top: 1rem;
+}
 
-        .gc-actions{ display:flex; gap:.6rem; flex-wrap:wrap; }
-        .gc-actions.center{ justify-content:center; }
-        .gc-btn{
-          padding:.75rem 1rem; border-radius:12px; font-weight:700;
-          border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color:#fff;
-          cursor:pointer; transition: transform .08s ease, box-shadow .2s, background .2s, border-color .2s;
-        }
-        .gc-btn:hover{ box-shadow: 0 10px 24px rgba(0,0,0,.25); background: rgba(255,255,255,.10); }
-        .gc-btn:active{ transform: translateY(1px) scale(.98); }
-        .gc-primary{ background: linear-gradient(180deg, #ff6067, var(--primary)); border-color: rgba(234,42,51,.6); }
-        .gc-primary:hover{ filter: brightness(1.05); }
-        .gc-outline{ background: transparent; }
+.gc-actions.center{ 
+  justify-content: center; 
+}
+.gc-actions{ 
+  display: flex; 
+  gap: .8rem; 
+  flex-wrap: wrap; 
+  margin-top: 1rem;
+}
 
+.gc-actions.center{ 
+  justify-content: center; 
+}
+
+.gc-btn{
+  flex: 1;
+  min-width: 180px;
+  padding: .9rem 1.5rem; 
+  border-radius: 12px; 
+  font-weight: 700;
+  font-size: 1rem;
+  border: 1px solid rgba(255,255,255,.12); 
+  background: rgba(255,255,255,.06); 
+  color: #fff;
+  cursor: pointer; 
+  transition: all .2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.gc-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  transform: translate(-50%, -50%);
+  transition: width .3s, height .3s;
+}
+
+.gc-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.gc-btn:hover{ 
+  box-shadow: 0 12px 28px rgba(0,0,0,.3); 
+  transform: translateY(-2px);
+}
+
+.gc-btn:active{ 
+  transform: translateY(0) scale(.98); 
+}
+
+.gc-primary{ 
+  background: linear-gradient(135deg, #22c55e, #16a34a); 
+  border-color: rgba(22,163,74,.8);
+  box-shadow: 0 4px 12px rgba(22,163,74,.3);
+  position: relative;
+  z-index: 1;
+}
+
+.gc-primary:hover{ 
+  filter: brightness(1.1);
+  box-shadow: 0 12px 28px rgba(22,163,74,.5);
+}
+
+.gc-outline{ 
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: 2px solid rgba(239,68,68,.8);
+  box-shadow: 0 4px 12px rgba(239,68,68,.4);
+}
+
+.gc-outline:hover{
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  border-color: rgba(239,68,68,1);
+  box-shadow: 0 12px 28px rgba(239,68,68,.6);
+  filter: brightness(1.15);
+}
+
+.gc-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.gc-btn:disabled:hover {
+  box-shadow: none;
+  filter: none;
+}
+
+      
         .gc-note{ color: var(--muted); font-size:.9rem; margin-top:.4rem }
 
         .gc-overlay{
